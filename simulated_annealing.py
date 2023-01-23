@@ -53,19 +53,19 @@ def makespan(times):
 
 # Defines function finish_times
 # Input: a solution (array of length 36 describing the order in which each job is processed on each machine)
-# Output: the finish times of each job
+# Output: the finish times of each machine
 
 def finish_times(solution):
-    time = 0
-    available = [0,0,0,0,0,0]
-    indices = [0,0,0,0,0,0]
+    time = 0 # The time from start
+    available = [0,0,0,0,0,0] # The time when each machine is available for a new job
+    indices = [0,0,0,0,0,0] # How many times each job has been processed so far
 
     for job in solution:
         index = indices[job]
         machine = job_order[job][index]
-        if time < available[machine]:
+        if time < available[machine]: # If machine is not currently available, we have to wait until it is
             time = available[machine]
-        available[machine] = time + process_cost[job][index]
+        available[machine] = time + process_cost[job][index] # Machine is now busy processing the job and is currently unavailable to process other jobs
         indices[job] += 1
 
     return available
@@ -76,8 +76,8 @@ def finish_times(solution):
 def random_neighbor(solution):
     i = 0
     j = 0
-    while i == j:
-        swap = random.sample(solution.tolist(), 2)
+    while solution[i] == solution[j]: # We need to random indices with different values in solution
+        swap = random.sample(solution.tolist(), 2) # Selects two random indices
         i = swap[0]
         j = swap[1]
     solution[i], solution[j] = solution[j], solution[i] # Swaps values in ith and jth positions
@@ -93,9 +93,9 @@ beta = 0.9 # Cooling parameter. Determines how quickly the probability of a rand
 best_score = 100 # High value that will be updated with first decent iteration
 
 for test in range(n_tests):
-    solution = np.random.permutation([i%6 for i in range(36)])
+    solution = np.random.permutation([i%6 for i in range(36)]) # Random initial solution
     score = makespan(finish_times(solution))
-    for iteration in range(n_iterations):
+    for iteration in range(n_iterations): # Evolves initial solution to a solution with a lower score
         neighbor_solution = random_neighbor(solution)
         neighbor_score = makespan(finish_times(neighbor_solution))
         if neighbor_score < score: # Update solution if the neighbor solution is better
