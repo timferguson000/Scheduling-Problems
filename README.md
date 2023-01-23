@@ -1,1 +1,1 @@
-# Scheduling-Problems
+Implements a simulated annealing algorithm to search for optimal solutions to a benchmark job shop scheduling problem due to Fisher and Thompson (ft06). The algorithm is probabilistic and is capable of finding schedules with the optimal makespan (time until the final job is completed) of 55.
