@@ -115,3 +115,7 @@ for test in range(n_tests):
 # Optimal solution has makespan of 55
 print(best_solution)
 print(best_score)
+
+# I obtained this output which represents an optimal solution
+# [0 5 3 5 0 4 3 5 1 3 1 1 5 2 3 1 2 3 1 4 2 4 2 2 1 0 2 4 0 0 5 3 4 0 5 4]
+# 55
